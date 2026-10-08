@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Guestbook</title>
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='style.css') }}"
+    >
+</head>
+
+<body>
+
+    <main class="container">
+
+        <section class="hero">
+            <h1>My Guestbook</h1>
+            <p>Leave a message and share something with us.</p>
+        </section>
+
+
+        <section class="card">
+
+            <h2>Sign the Guestbook</h2>
+
+            <form action="{{ url_for('add_message') }}" method="POST">
+
+                <div class="form-group">
+                    <label for="name">Name</label>
+
+                    <input
+                        type="text"
+                        id="name"
+                        name="name"
+                        maxlength="100"
+                        placeholder="Enter your name"
+                        required
+                    >
+                </div>
+
+
+                <div class="form-group">
+                    <label for="message">Message</label>
+
+                    <textarea
+                        id="message"
+                        name="message"
+                        placeholder="Write your message..."
+                        required
+                    ></textarea>
+                </div>
+
+
+                <button type="submit">
+                    Sign Guestbook
+                </button>
+
+            </form>
+
+        </section>
+
+
+        <section class="messages">
+
+            <h2>Guestbook Messages</h2>
+
+            {% if messages %}
+
+                {% for message in messages %}
+
+                    <article class="message-card">
+
+                        <div class="message-header">
+
+                            <strong>
+                                {{ message.name }}
+                            </strong>
+
+                            <span>
+                                {{ message.created_at }}
+                            </span>
+
+                        </div>
+
+                        <p>
+                            {{ message.message }}
+                        </p>
+
+                    </article>
+
+                {% endfor %}
+
+            {% else %}
+
+                <div class="empty">
+                    <p>No messages yet. Be the first to sign!</p>
+                </div>
+
+            {% endif %}
+
+        </section>
+
+    </main>
+
+</body>
+</html>
